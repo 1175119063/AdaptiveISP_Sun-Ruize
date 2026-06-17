@@ -1,0 +1,16 @@
+# 数据集 (21GB, 太大)
+datasets/
+
+# 预训练权重 (去 GitHub Release 下载)
+pretrained/
+
+# 训练中间 checkpoint (只保留最终版)
+# checkpoint/ 里的 DynamicISP_iter_10000.pth 已包含
+
+# Python
+__pycache__/
+*.pyc
+
+# 系统
+.DS_Store
+Thumbs.db
