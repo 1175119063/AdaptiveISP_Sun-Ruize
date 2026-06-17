@@ -13,7 +13,7 @@ adaptive ISP/
 ├── AdaptiveISP/              ← 开源代码主目录
 ├── AdaptiveISP_Sun Ruize/    ← 本次提交（本目录）
 │   ├── README.md             ← 本文件
-│   ├── report.docx           ← 实验报告
+│   ├── report.pdf            ← 实验报告
 │   ├── config.py             ← 修改后的配置文件
 │   ├── bird.yaml             ← BIRDS 数据集配置
 │   ├── run_1_train.sh        ← 训练脚本
@@ -23,23 +23,36 @@ adaptive ISP/
 └── pretrained/               ← 预训练权重
 ```
 
-## 数据集准备
+## 数据集
 
-1. 500 张 ARW 原始照片放在任意目录
-2. 使用 `rawpy` 读取 ARW，应用 gamma 校正后导出为 PNG (512×512)
-3. 使用 YOLOv8x 预训练模型对 PNG 进行推理，导出 YOLO 格式标签
-4. 将 PNG 和标签按以下结构放置：
-   ```
-   datasets/BIRDS/PNG/
-   ├── images/
-   │   ├── train/  (400 张)
-   │   └── val/    (100 张)
-   ├── labels/
-   │   ├── train/  (400 个 .txt)
-   │   └── val/    (100 个 .txt)
-   ├── train.txt   (图片路径列表)
-   └── val.txt     (图片路径列表)
-   ```
+BIRDS 数据集共 **500 张鸟类照片，全部来自个人拍摄**（Sony α 系列相机，ARW 格式）。拍摄场景涵盖白天自然光、林间阴影、水面反光、逆光等多种光照条件。
+
+### 数据集下载
+
+已将处理后的 PNG 数据集上传至百度网盘：
+
+> **链接**: https://pan.baidu.com/s/1S4QrRCEjuppy4dvwpwlutQ?pwd=4m3j
+> **提取码**: 4m3j
+
+下载后解压到 `datasets/BIRDS/PNG/`，目录结构如下：
+
+```
+datasets/BIRDS/PNG/
+├── images/
+│   ├── train/  (400 张)
+│   └── val/    (100 张)
+├── labels/
+│   ├── train/  (400 个 .txt, YOLOv8 pseudo-label)
+│   └── val/    (100 个 .txt)
+├── train.txt   (图片路径列表)
+└── val.txt     (图片路径列表)
+```
+
+### 数据集制作流程
+
+1. 500 张 ARW 原始照片 → `rawpy` 读取 + gamma 校正 → 导出为 PNG
+2. 使用 YOLOv8x 预训练模型对 PNG 进行推理，导出 YOLO 格式 pseudo-label
+3. 按 400/100 划分训练集和验证集
 
 ## 预训练权重下载
 
@@ -98,4 +111,4 @@ bash ../AdaptiveISP_Sun\ Ruize/run_2_eval_all.sh
 
 3. **数据多样性 > Domain Match**：LOD 多场景数据训练的鲁棒策略优于 BIRDS 单场景微调。
 
-详见 `report.docx`。
+详见 `report.pdf`。
